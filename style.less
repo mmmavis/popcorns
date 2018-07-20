@@ -1,0 +1,297 @@
+@border-radius: 3px;
+@aurelia-blue: #0068FF;
+@aurelia-green: #46D89E;
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font: normal x-small verdana,arial,helvetica,sans-serif;
+  margin: 0;
+  font-size: 16px;
+  background-color: fadeout(@aurelia-green, 50%);
+  background-image: url(assets/bg-cropped-bottom-left.png);
+  background-size: 250px 193px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-attachment: fixed;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+video,
+img {
+  max-width: 100%;
+}
+
+input,
+textarea {
+  border: 0;
+  padding: 5px;
+  width: 100%;
+  margin: 5px 0;
+  background: fade(white, 50%);
+  border-radius: @border-radius;
+  font-family: Arial;
+  font-size: inherit;
+
+  &::placeholder {
+    font: normal x-small verdana,arial,helvetica,sans-serif;
+  }
+}
+
+textarea {
+  resize: none;
+}
+
+button {
+  margin: 0;
+  padding: 5px;
+  margin: 5px;
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#freepik {
+  display: block;
+  color: #eee;
+  font-size: 8px;
+  text-align: right;
+}
+
+#outer-wrapper {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+@left-panel-width: 300px;
+
+#left {
+  width: 0;
+
+  @media (min-width: 768px) {
+    width: @left-panel-width;
+  }
+}
+
+#right {
+  width: 100%;
+}
+
+#inner-wrapper {
+  @margin-y: 10px;
+  @border-width: 10px;
+
+  width: 100%;
+  top: 0;
+  right: 0;
+  min-height: 100vh;
+  padding: 15px;
+  margin-bottom: 50px;
+  overflow: hidden;
+
+  // overflow-x: hidden;
+  // overflow-y: scroll;
+
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#new-note {
+  float: none;
+  width: 100%;
+  height: 500px;
+  max-width: 90%;
+
+  textarea {
+    height: 150px;
+  }
+}
+
+#new-note-form {
+  input[type="radio"] {
+    width: auto;
+  }
+
+  button[type="submit"] {
+    background-color: @aurelia-green;
+    color: white;
+    width: 100%;
+    margin: 5px 0 0;
+
+    &:hover {
+      background-color: @aurelia-blue;
+    }
+  }
+
+  @media (min-width: 768px) {
+    min-width: 300px;
+  }
+}
+
+.note {
+  // border: 2px solid red;
+  @side-padding: 15px;
+  @side-margin: 15px;
+  @max-height: 100%;
+
+  // float: left;
+  color: black;
+
+  min-width: 150px;
+  max-width: 100%;
+  min-height: 280px;
+  margin: @side-margin*2 @side-margin;
+  font-family: Arial;
+  font-size: 14px;
+  background-image: url(assets/popcorn-1.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  // animation: stickon 100ms cubic-bezier(.6,.04,.98,.34);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  // @keyframes stickon {
+  //   from {
+  //     transform: scale(3);
+  //   }
+
+  //   to {
+  //     transform: scale(1);
+  //   }
+  // }
+
+  @media (min-width: 768px) {
+    max-width: 30%;
+  }
+
+  &.has-media {
+    @image-max-height: calc(@max-height - @side-padding*2);
+
+    .img-container {
+      margin: 20px auto 0;
+      position: relative;
+      max-width: 75%;
+      // max-height: @image-max-height;
+      margin-bottom: 5px;
+
+      &:hover {
+        .overlay {
+          opacity: 1;
+          cursor: pointer;
+        }
+      }
+    }
+
+    a {
+      display: inline-block;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      transition: .5s ease;
+      background: fade(black, 70%);
+      color: white;
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .img-container {
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      img {
+        border-radius: @border-radius;
+        max-width: 100%;
+        // max-height: @image-max-height;
+        max-height: 300px;
+        transition: all .3s ease-in-out;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  &:nth-child(even) {
+    background-image: url(assets/popcorn-5.png);
+    transform: rotate(-10deg);
+    position: relative;
+    top: 5px;
+  }
+
+  &:nth-child(3n) {
+    background-image: url(assets/popcorn-2.png);
+    transform: rotate(8deg);
+    position: relative;
+    top: 0;
+    left: 3px;
+
+    .content {
+      padding: 10% 20%;
+    }
+  }
+
+  &:nth-child(5n) {
+    transform: rotate(20deg);
+    position: relative;
+    top: -10px;
+    left: 5px;
+  }
+
+  &:nth-child(7n) {
+    background-image: url(assets/popcorn-3.png);
+    transform: rotate(-20deg);
+    position: relative;
+    top: -8px;
+  }
+
+  &:nth-child(10n) {
+    background-image: url(assets/popcorn-4.png);
+    transform: rotate(5deg);
+    position: relative;
+    top: 0px;
+    left: 10px;
+  }
+
+  .content {
+    padding: 9% 22%;
+
+    &:after {
+      content: " ";
+      display: block;
+      height: 0;
+      clear: both;
+    }
+  }
+
+  .submitter {
+    float: right;
+  }
+}
