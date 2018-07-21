@@ -15,6 +15,7 @@
     <meta property="og:image:type" content="image/png" />
     <link rel="apple-touch-icon" type="image/png" sizes="360x360" href="favicon.png">
     <link rel="icon" type="image/png" sizes="90x90" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="https://csshake.surge.sh/csshake.min.css">
     <link rel="stylesheet/less" type="text/css" href="style.less" />
     <script type="text/javascript" src="lib/less.min.js" ></script>
     <script type="text/javascript" src="lib/jquery-3.2.1.min.js"></script>
@@ -23,6 +24,11 @@
 
     <script id="note-template" type="text/x-handlebars-template">
       <div class="note {{bgColor}}{{#if imgSrc}} has-media{{/if}}" data-id="{{id}}" id="{{id}}">
+        <img src='assets/kernel.png'
+          class='kernel shake-hard'
+          width='50' height='84'
+          style="{{kernelStyle}}"
+        >
         <div class="content">
           {{#if imgSrcIsVideo}}
             <video src="{{imgSrc}}"controls preload="metadata">
@@ -74,6 +80,7 @@
   <body>
     <div id="outer-wrapper">
       <div id="left">
+        <button id="pop-all">Pop All</button>
       </div>
       <div id="right">
         <div id="inner-wrapper"></div>

@@ -45,8 +45,6 @@ function renderAllNotes(done) {
     var numNotes = Object.keys(notes).length;
     var currIndex = 0;
 
-    console.log(numNotes);
-
     if (numNotes === 0) {
       done();
     }
@@ -123,7 +121,17 @@ function renderNote(note) {
       break;
     case "webpage":
       note.imgSrcIsWebpage = true;
-    }
+  }
+
+  var rotateDeg = Math.floor(Math.random() * 360);
+  var scale = (Math.floor(Math.random() * 100) + 70) / 100;
+
+  var kernelStyle = [
+    "position: relative",
+    "transform: rotate(" + rotateDeg +"deg) " + "scale(" + scale +") "
+  ];
+
+  note.kernelStyle = kernelStyle.join(";") + ";";
 
   $("#inner-wrapper").append(createHTML(note,"note-template"));
 }
@@ -153,4 +161,22 @@ $("body").on("change", "#new-note-form input[type=radio][name=bgColor]", functio
   });
 
   $("#new-note").addClass(this.value);
+});
+
+$("body").on("click", ".note .kernel", function() {
+  $(this).parent(".note").addClass("popped");
+});
+
+$("#pop-all").on("click", function() {
+  $(".kernel").each(function( index, element ){
+    var $k = $(this);
+    $k.addClass("shake-constant");
+
+    setTimeout(function() {
+      $k.removeClass("shake-constant");
+      $k.parent(".note").addClass("popped");
+    }, 500);
+  });
+
+  $(this).hide();
 });

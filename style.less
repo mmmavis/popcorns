@@ -92,6 +92,23 @@ button {
   width: 100%;
 }
 
+#pop-all {
+  position: fixed;
+  bottom: 0;
+  background: black;
+  color: white;
+  text-transform: uppercase;
+  font-weight: normal;
+  border: none;
+  padding: 5px 15px;
+  margin: 10px;
+
+  &:hover,
+  &:active {
+    background: @aurelia-blue;
+  }
+}
+
 #inner-wrapper {
   @margin-y: 10px;
   @border-width: 10px;
@@ -144,12 +161,10 @@ button {
 }
 
 .note {
-  // border: 2px solid red;
   @side-padding: 15px;
   @side-margin: 15px;
   @max-height: 100%;
 
-  // float: left;
   color: black;
 
   min-width: 150px;
@@ -162,21 +177,10 @@ button {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
-  // animation: stickon 100ms cubic-bezier(.6,.04,.98,.34);
 
   display: flex;
   justify-content: center;
   align-items: center;
-
-  // @keyframes stickon {
-  //   from {
-  //     transform: scale(3);
-  //   }
-
-  //   to {
-  //     transform: scale(1);
-  //   }
-  // }
 
   @media (min-width: 768px) {
     max-width: 30%;
@@ -278,6 +282,24 @@ button {
     position: relative;
     top: 0px;
     left: 10px;
+  }
+
+  &:not(.popped):not(#new-note) {
+    background: none;
+
+    .content {
+      display: none;
+    }
+  }
+
+  &.popped {
+    .kernel {
+      display: none;
+    }
+  }
+
+  .kernel {
+    cursor: pointer;
   }
 
   .content {
