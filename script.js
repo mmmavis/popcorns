@@ -1,5 +1,7 @@
 const ANIMATION_DELAY = 0; // in ms
+const MESSAGES_FROM_EXPORTED_JSON = true;
 
+/*
 const FIREBASE_DB_PATH = `/notes`;
 
 // Initialize Firebase
@@ -35,13 +37,27 @@ firebase.auth().onAuthStateChanged(function(user) {
   }
 });
 
+*/
+
+renderAllNotes(function() {
+  setTimeout(function() {
+    $("#inner-wrapper").append(createHTML({},"new-note-template"));
+  }, ANIMATION_DELAY);
+});
+
 Handlebars.registerHelper("localTime", function(timestamp) {
   return moment.unix(timestamp/1000).format("YYYY-MM-DD hh:mm a");
 });
 
 function renderAllNotes(done) {
-  firebase.database().ref(FIREBASE_DB_PATH).once('value').then(function(snapshot) {
-    var notes = snapshot.val();
+  // firebase.database().ref(FIREBASE_DB_PATH).once('value').then(function(snapshot) {
+  //   var notes = snapshot.val();
+  $.getJSON("data.json", function(notes) {
+    if (MESSAGES_FROM_EXPORTED_JSON) {
+      notes = notes.notes;
+    }
+    console.log(notes);
+
     var numNotes = Object.keys(notes).length;
     var currIndex = 0;
 
@@ -137,23 +153,23 @@ function renderNote(note) {
 }
 
 // send new note
-$("body").on("submit", "#new-note-form", function(event) {
-  event.preventDefault();
+// $("body").on("submit", "#new-note-form", function(event) {
+//   event.preventDefault();
 
-  var ref = firebase.database().ref(FIREBASE_DB_PATH).push();
-  var task = ref.set({
-    timestamp: Date.now().toString(),
-    message: $(this).find("[name=message]").val().replace(/\n/g,"<br>"),
-    submitter: $(this).find("[name=submitter]").val(),
-    imgSrc: $(this).find("[name=imgSrc]").val(),
-    textColor: null
-  }, function complete() {
-      // reload page so new notes shows... a cheat...
-      window.location.reload(true);
-      done();
-    }
-  );
-});
+//   var ref = firebase.database().ref(FIREBASE_DB_PATH).push();
+//   var task = ref.set({
+//     timestamp: Date.now().toString(),
+//     message: $(this).find("[name=message]").val().replace(/\n/g,"<br>"),
+//     submitter: $(this).find("[name=submitter]").val(),
+//     imgSrc: $(this).find("[name=imgSrc]").val(),
+//     textColor: null
+//   }, function complete() {
+//       // reload page so new notes shows... a cheat...
+//       window.location.reload(true);
+//       done();
+//     }
+//   );
+// });
 
 $("body").on("change", "#new-note-form input[type=radio][name=bgColor]", function(event) {
   $.each($("input[type=radio][name=bgColor]"), function(index, option) {
